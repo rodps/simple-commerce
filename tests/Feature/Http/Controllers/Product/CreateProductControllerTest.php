@@ -31,7 +31,7 @@ class CreateProductControllerTest extends TestCase
             ->assertJsonStructure(['id', 'name', 'description', 'price', 'image', 'created_at', 'updated_at'])
             ->assertJson($data);
 
-        $this->assertDatabaseHas('products', $data);
+        $this->assertDatabaseHas('products', array_merge($data, ['user_id' => $user->id]));
         $this->assertDatabaseCount('products', 1);
     }
 }
