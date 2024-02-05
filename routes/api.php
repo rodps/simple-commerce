@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Product\CreateProductController;
 use App\Http\Controllers\Product\DeleteProductController;
+use App\Http\Controllers\Product\ListProductsController;
 use App\Http\Controllers\Product\ShowProductController;
 use App\Http\Controllers\Product\UpdateProductController;
 use App\Http\Controllers\User\CreateUserController;
@@ -41,4 +42,5 @@ Route::group([
     Route::put('/{product}', UpdateProductController::class);
     Route::get('/{product}', ShowProductController::class);
     Route::delete('/{product}', DeleteProductController::class);
+    Route::get('/', ListProductsController::class);
 });
