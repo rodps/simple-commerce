@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Product\CreateProductController;
+use App\Http\Controllers\Product\UpdateProductController;
 use App\Http\Controllers\User\CreateUserController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,4 +36,5 @@ Route::group([
     'prefix' => 'products'
 ], function () {
     Route::post('/', CreateProductController::class);
+    Route::put('/{id}', UpdateProductController::class);
 });
