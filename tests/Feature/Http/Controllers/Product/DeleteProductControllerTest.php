@@ -63,4 +63,19 @@ class DeleteProductControllerTest extends TestCase
         // Assert
         $this->assertDatabaseCount('products', 0);
     }
+
+    public function test_should_return_403_if_user_not_authorized(): void
+    {
+        // Arrange
+        $user = User::factory()->create();
+        $product = Product::factory()->for($user)->create();
+
+        $notAuthorizedUser = User::factory()->create();
+
+        // Act
+        $response = $this->actingAs($notAuthorizedUser)->deleteJson("/api/products/{$product->id}");
+
+        // Assert
+        $response->assertStatus(403);
+    }
 }

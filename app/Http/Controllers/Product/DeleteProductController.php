@@ -11,6 +11,7 @@ class DeleteProductController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:delete,product');
     }
 
     public function __invoke(Product $product)
