@@ -3,7 +3,6 @@
 namespace App\Http\Services;
 
 use App\Models\Product;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductService
 {
@@ -18,14 +17,8 @@ class ProductService
         ]);
     }
 
-    public function update(int $userId, int $id, array $data)
+    public function update(Product $product, array $data)
     {
-        $product = Product::where('id', $id)->where('user_id', $userId)->first();
-
-        if (!$product) {
-            throw new NotFoundHttpException('Product ' . $id . ' not found');
-        }
-
         $product->update($data);
 
         return $product;

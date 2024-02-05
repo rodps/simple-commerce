@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Services\ProductService;
+use App\Models\Product;
 
 class UpdateProductController extends Controller
 {
@@ -13,9 +14,9 @@ class UpdateProductController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function __invoke(int $id, UpdateProductRequest $request)
+    public function __invoke(UpdateProductRequest $request, Product $product)
     {
-        $response = $this->service->update($request->user()->id, $id, $request->validated());
+        $response = $this->service->update($product, $request->validated());
 
         return response()->json($response);
     }

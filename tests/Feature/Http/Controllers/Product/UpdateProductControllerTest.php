@@ -59,4 +59,26 @@ class UpdateProductControllerTest extends TestCase
         // Assert
         $response->assertStatus(404);
     }
+
+    public function test_should_return_403_if_user_not_authorized(): void
+    {
+        // Arrange
+        $user = User::factory()->create();
+        $product = Product::factory()->for($user)->create();
+
+        $notAuthorizedUser = User::factory()->create();
+
+        $data = [
+            'name' => 'new name',
+            'description' => 'new description',
+            'price' => 100,
+            'image' => 'new image'
+        ];
+
+        // Act
+        $response = $this->actingAs($notAuthorizedUser)->putJson("/api/products/{$product->id}", $data);
+
+        // Assert
+        $response->assertStatus(403);
+    }
 }
