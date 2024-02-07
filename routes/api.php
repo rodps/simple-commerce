@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Product\CreateProductController;
-use App\Http\Controllers\Product\DeleteProductController;
-use App\Http\Controllers\Product\ListProductsController;
-use App\Http\Controllers\Product\ShowProductController;
-use App\Http\Controllers\Product\UpdateProductController;
-use App\Http\Controllers\User\CreateUserController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\Product\CreateProductController;
+use App\Http\Controllers\Admin\Product\DeleteProductController;
+use App\Http\Controllers\Admin\Product\ListProductsController;
+use App\Http\Controllers\Admin\Product\ShowProductController;
+use App\Http\Controllers\Admin\Product\UpdateProductController;
+use App\Http\Controllers\Admin\User\CreateUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,27 +20,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([
-    'prefix' => 'auth'
-], function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::get('me', [AuthController::class, 'me']);
-});
+Route::prefix('admin')->middleware('auth:api')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('login', [AuthController::class, 'login'])->withoutMiddleware('auth:api');
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::get('me', [AuthController::class, 'me']);
+    });
 
-Route::group([
-    'prefix' => 'users'
-], function () {
-    Route::post('/', CreateUserController::class);
-});
+    Route::prefix('users')->group(function () {
+        Route::post('/', CreateUserController::class)->withoutMiddleware('auth:api');
+    });
 
-Route::group([
-    'prefix' => 'products'
-], function () {
-    Route::post('/', CreateProductController::class);
-    Route::put('/{product}', UpdateProductController::class);
-    Route::get('/{product}', ShowProductController::class);
-    Route::delete('/{product}', DeleteProductController::class);
-    Route::get('/', ListProductsController::class);
+    Route::prefix('products')->group(function () {
+        Route::post('/', CreateProductController::class);
+        Route::put('/{product}', UpdateProductController::class);
+        Route::get('/{product}', ShowProductController::class);
+        Route::delete('/{product}', DeleteProductController::class);
+        Route::get('/', ListProductsController::class);
+    });
 });

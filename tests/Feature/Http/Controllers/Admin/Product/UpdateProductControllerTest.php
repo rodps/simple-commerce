@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Product;
+namespace Tests\Feature\Http\Controllers\Admin\Product;
 
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UpdateProductControllerTest extends TestCase
@@ -22,7 +21,7 @@ class UpdateProductControllerTest extends TestCase
         $data['name'] = 'new name';
 
         // Act
-        $response = $this->actingAs($user)->putJson("/api/products/{$product->id}", $data);
+        $response = $this->actingAs($user)->putJson("/api/admin/products/{$product->id}", $data);
 
         // Assert
         $response
@@ -54,7 +53,7 @@ class UpdateProductControllerTest extends TestCase
         ];
 
         // Act
-        $response = $this->actingAs($user)->putJson('/api/products/1', $data);
+        $response = $this->actingAs($user)->putJson('/api/admin/products/1', $data);
 
         // Assert
         $response->assertStatus(404);
@@ -76,7 +75,7 @@ class UpdateProductControllerTest extends TestCase
         ];
 
         // Act
-        $response = $this->actingAs($notAuthorizedUser)->putJson("/api/products/{$product->id}", $data);
+        $response = $this->actingAs($notAuthorizedUser)->putJson("/api/admin/products/{$product->id}", $data);
 
         // Assert
         $response->assertStatus(403);

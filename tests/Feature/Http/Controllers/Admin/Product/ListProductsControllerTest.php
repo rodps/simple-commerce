@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Product;
+namespace Tests\Feature\Http\Controllers\Admin\Product;
 
 use App\Models\Product;
 use App\Models\User;
@@ -19,7 +19,7 @@ class ListProductsControllerTest extends TestCase
         $this->seed(ProductSeeder::class);
 
         // Act
-        $response = $this->actingAs($user)->getJson('/api/products');
+        $response = $this->actingAs($user)->getJson('/api/admin/products');
 
         // Assert
         $response
@@ -38,7 +38,7 @@ class ListProductsControllerTest extends TestCase
         $this->seed(ProductSeeder::class);
 
         // Act
-        $response = $this->actingAs($user)->getJson('/api/products?limit=5');
+        $response = $this->actingAs($user)->getJson('/api/admin/products?limit=5');
 
         // Assert
         $response
@@ -57,7 +57,7 @@ class ListProductsControllerTest extends TestCase
         $this->seed(ProductSeeder::class);
 
         // Act
-        $response = $this->actingAs($user)->getJson('/api/products?limit=5&page=2');
+        $response = $this->actingAs($user)->getJson('/api/admin/products?limit=5&page=2');
 
         // Assert
         $response
@@ -69,7 +69,7 @@ class ListProductsControllerTest extends TestCase
     public function test_should_return_401_if_user_not_authorized(): void
     {
         // Act
-        $response = $this->getJson('/api/products');
+        $response = $this->getJson('/api/admin/products');
 
         // Assert
         $response->assertStatus(401);
@@ -83,7 +83,7 @@ class ListProductsControllerTest extends TestCase
         $product = Product::factory()->for($user)->create();
 
         // Act
-        $response = $this->actingAs($user)->getJson("/api/products?name={$product->name}");
+        $response = $this->actingAs($user)->getJson("/api/admin/products?name={$product->name}");
 
         // Assert
         $response
@@ -116,7 +116,7 @@ class ListProductsControllerTest extends TestCase
         ]);
 
         // Act
-        $response = $this->actingAs($user)->getJson('/api/products?max_price=200');
+        $response = $this->actingAs($user)->getJson('/api/admin/products?max_price=200');
 
         // Assert
         $response
@@ -148,7 +148,7 @@ class ListProductsControllerTest extends TestCase
         ]);
 
         // Act
-        $response = $this->actingAs($user)->getJson('/api/products?min_price=250');
+        $response = $this->actingAs($user)->getJson('/api/admin/products?min_price=250');
 
         // Assert
         $response

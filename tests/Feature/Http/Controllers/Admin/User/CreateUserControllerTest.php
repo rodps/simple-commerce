@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
+namespace Tests\Feature\Http\Controllers\Admin\User;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,10 +10,7 @@ use Tests\TestCase;
 class CreateUserControllerTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * POST /api/users
-     */
+    
     public function test_the_user_is_created_successfully(): void
     {
         // Arrange
@@ -24,7 +21,7 @@ class CreateUserControllerTest extends TestCase
         ];
 
         // Act
-        $response = $this->post('/api/users', $data);
+        $response = $this->post('/api/admin/users', $data);
 
         // Assert
         $response
@@ -51,7 +48,7 @@ class CreateUserControllerTest extends TestCase
 
     public function test_the_user_is_not_created_with_invalid_data()
     {
-        $this->post('/api/users', [])
+        $this->post('/api/admin/users', [])
             ->assertStatus(422)
             ->assertJsonStructure([
                 'message',
@@ -71,7 +68,7 @@ class CreateUserControllerTest extends TestCase
         $user = User::factory()->create();
 
         // Act
-        $response = $this->post('/api/users', [
+        $response = $this->post('/api/admin/users', [
             'name' => $user->name,
             'email' => $user->email,
             'password' => fake()->password(),

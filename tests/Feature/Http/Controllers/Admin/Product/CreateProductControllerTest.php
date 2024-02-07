@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Product;
+namespace Tests\Feature\Http\Controllers\Admin\Product;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,7 +23,7 @@ class CreateProductControllerTest extends TestCase
         ];
 
         // Act
-        $response = $this->actingAs($user)->postJson('/api/products',  $data);
+        $response = $this->actingAs($user)->postJson('/api/admin/products',  $data);
 
         // Assert
         $response

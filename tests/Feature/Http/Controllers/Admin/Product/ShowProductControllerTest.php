@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Product;
+namespace Tests\Feature\Http\Controllers\Admin\Product;
 
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ShowProductControllerTest extends TestCase
@@ -20,7 +19,7 @@ class ShowProductControllerTest extends TestCase
         $product = Product::factory()->for($user)->create();
 
         // Act
-        $response = $this->actingAs($user)->getJson("/api/products/{$product->id}");
+        $response = $this->actingAs($user)->getJson("/api/admin/products/{$product->id}");
 
         // Assert
         $response
@@ -35,7 +34,7 @@ class ShowProductControllerTest extends TestCase
         $user = User::factory()->create();
 
         // Act
-        $response = $this->actingAs($user)->getJson('/api/products/1');
+        $response = $this->actingAs($user)->getJson('/api/admin/products/1');
 
         // Assert
         $response->assertStatus(404);
@@ -44,7 +43,7 @@ class ShowProductControllerTest extends TestCase
     public function test_should_return_401_if_user_is_not_authenticated(): void
     {
         // Act
-        $response = $this->getJson("/api/products/1");
+        $response = $this->getJson("/api/admin/products/1");
 
         // Assert
         $response->assertStatus(401);

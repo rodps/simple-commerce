@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Product;
+namespace Tests\Feature\Http\Controllers\Admin\Product;
 
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DeleteProductControllerTest extends TestCase
@@ -19,7 +18,7 @@ class DeleteProductControllerTest extends TestCase
         $product = Product::factory()->for($user)->create();
 
         // Act
-        $response = $this->actingAs($user)->deleteJson("/api/products/{$product->id}");
+        $response = $this->actingAs($user)->deleteJson("/api/admin/products/{$product->id}");
 
         // Assert
         $response->assertNoContent();
@@ -31,7 +30,7 @@ class DeleteProductControllerTest extends TestCase
         $user = User::factory()->create();
 
         // Act
-        $response = $this->actingAs($user)->deleteJson('/api/products/1');
+        $response = $this->actingAs($user)->deleteJson('/api/admin/products/1');
 
         // Assert
         $response->assertStatus(404);
@@ -44,7 +43,7 @@ class DeleteProductControllerTest extends TestCase
         $product = Product::factory()->for($user)->create();
 
         // Act
-        $response = $this->deleteJson("/api/products/{$product->id}");
+        $response = $this->deleteJson("/api/admin/products/{$product->id}");
 
         // Assert
         $response->assertStatus(401);
@@ -58,7 +57,7 @@ class DeleteProductControllerTest extends TestCase
         $this->assertDatabaseCount('products', 1);
 
         // Act
-        $this->actingAs($user)->deleteJson("/api/products/{$product->id}");
+        $this->actingAs($user)->deleteJson("/api/admin/products/{$product->id}");
 
         // Assert
         $this->assertDatabaseCount('products', 0);
@@ -73,7 +72,7 @@ class DeleteProductControllerTest extends TestCase
         $notAuthorizedUser = User::factory()->create();
 
         // Act
-        $response = $this->actingAs($notAuthorizedUser)->deleteJson("/api/products/{$product->id}");
+        $response = $this->actingAs($notAuthorizedUser)->deleteJson("/api/admin/products/{$product->id}");
 
         // Assert
         $response->assertStatus(403);

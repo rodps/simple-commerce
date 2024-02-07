@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Product;
+namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\UpdateProductRequest;
@@ -9,10 +9,7 @@ use App\Models\Product;
 
 class UpdateProductController extends Controller
 {
-    public function __construct(private ProductService $service)
-    {
-        $this->middleware('auth:api');
-    }
+    public function __construct(private ProductService $service) {}
 
     public function __invoke(UpdateProductRequest $request, Product $product)
     {
