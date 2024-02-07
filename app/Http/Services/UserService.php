@@ -15,6 +15,6 @@ class UserService
             throw new ConflictHttpException('User already exists');
         }
 
-        return User::create($data);
+        return User::create(array_merge($data, ['role' => 'ADMIN']));
     }
 }

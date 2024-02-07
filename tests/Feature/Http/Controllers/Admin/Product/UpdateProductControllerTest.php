@@ -14,7 +14,7 @@ class UpdateProductControllerTest extends TestCase
     public function test_should_update_product_with_success(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $product = Product::factory()->for($user)->create();
 
         $data = $product->toArray();
@@ -43,7 +43,7 @@ class UpdateProductControllerTest extends TestCase
     public function test_should_return_404_if_product_not_found(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $data = [
             'name' => 'new name',
@@ -62,7 +62,7 @@ class UpdateProductControllerTest extends TestCase
     public function test_should_return_403_if_user_not_authorized(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $product = Product::factory()->for($user)->create();
 
         $notAuthorizedUser = User::factory()->create();

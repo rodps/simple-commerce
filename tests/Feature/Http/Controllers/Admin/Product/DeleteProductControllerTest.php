@@ -14,7 +14,7 @@ class DeleteProductControllerTest extends TestCase
     public function test_should_return_204_on_success(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $product = Product::factory()->for($user)->create();
 
         // Act
@@ -27,7 +27,7 @@ class DeleteProductControllerTest extends TestCase
     public function test_should_return_404_if_product_does_not_exist(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         // Act
         $response = $this->actingAs($user)->deleteJson('/api/admin/products/1');
@@ -39,7 +39,7 @@ class DeleteProductControllerTest extends TestCase
     public function test_should_return_401_if_user_is_not_authenticated(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $product = Product::factory()->for($user)->create();
 
         // Act
@@ -52,7 +52,7 @@ class DeleteProductControllerTest extends TestCase
     public function test_should_delete_product_from_database(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $product = Product::factory()->for($user)->create();
         $this->assertDatabaseCount('products', 1);
 
@@ -66,7 +66,7 @@ class DeleteProductControllerTest extends TestCase
     public function test_should_return_403_if_user_not_authorized(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $product = Product::factory()->for($user)->create();
 
         $notAuthorizedUser = User::factory()->create();

@@ -13,7 +13,7 @@ class CreateProductControllerTest extends TestCase
     public function test_the_product_is_created_successfully()
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $data = [
             'name' => fake()->name(),

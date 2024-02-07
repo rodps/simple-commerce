@@ -15,7 +15,7 @@ class ShowProductControllerTest extends TestCase
     public function test_should_return_ok(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $product = Product::factory()->for($user)->create();
 
         // Act
@@ -31,7 +31,7 @@ class ShowProductControllerTest extends TestCase
     public function test_should_return_404_if_product_not_found(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         // Act
         $response = $this->actingAs($user)->getJson('/api/admin/products/1');

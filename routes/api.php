@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin')->middleware('auth:api')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', [AuthController::class, 'login'])->withoutMiddleware('auth:api');
         Route::post('logout', [AuthController::class, 'logout']);
@@ -28,15 +28,17 @@ Route::prefix('admin')->middleware('auth:api')->group(function () {
         Route::get('me', [AuthController::class, 'me']);
     });
 
-    Route::prefix('users')->group(function () {
-        Route::post('/', CreateUserController::class)->withoutMiddleware('auth:api');
-    });
-
-    Route::prefix('products')->group(function () {
-        Route::post('/', CreateProductController::class);
-        Route::put('/{product}', UpdateProductController::class);
-        Route::get('/{product}', ShowProductController::class);
-        Route::delete('/{product}', DeleteProductController::class);
-        Route::get('/', ListProductsController::class);
+    Route::prefix('admin')->middleware('can:admin-access')->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::post('/', CreateUserController::class)->withoutMiddleware(['auth:api', 'can:admin-access']);
+        });
+    
+        Route::prefix('products')->group(function () {
+            Route::post('/', CreateProductController::class);
+            Route::put('/{product}', UpdateProductController::class);
+            Route::get('/{product}', ShowProductController::class);
+            Route::delete('/{product}', DeleteProductController::class);
+            Route::get('/', ListProductsController::class);
+        });
     });
 });

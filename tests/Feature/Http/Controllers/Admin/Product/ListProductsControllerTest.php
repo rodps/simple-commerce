@@ -15,7 +15,7 @@ class ListProductsControllerTest extends TestCase
     public function test_should_return_10_products(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $this->seed(ProductSeeder::class);
 
         // Act
@@ -34,7 +34,7 @@ class ListProductsControllerTest extends TestCase
     public function test_should_return_5_products(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $this->seed(ProductSeeder::class);
 
         // Act
@@ -53,7 +53,7 @@ class ListProductsControllerTest extends TestCase
     public function test_should_return_5_products_from_page_2(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $this->seed(ProductSeeder::class);
 
         // Act
@@ -79,7 +79,7 @@ class ListProductsControllerTest extends TestCase
     {
         // Arrange
         $this->seed(ProductSeeder::class);
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         $product = Product::factory()->for($user)->create();
 
         // Act
