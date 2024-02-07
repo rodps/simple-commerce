@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\Product\CreateProductController;
 use App\Http\Controllers\Admin\Product\DeleteProductController;
@@ -29,6 +30,8 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::prefix('admin')->middleware('can:admin-access')->group(function () {
+        Route::post('login', LoginController::class)->withoutMiddleware(['auth:api', 'can:admin-access']);
+        
         Route::prefix('users')->group(function () {
             Route::post('/', CreateUserController::class)->withoutMiddleware(['auth:api', 'can:admin-access']);
         });
