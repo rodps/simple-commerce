@@ -9,12 +9,10 @@ use App\Models\Product;
 
 class UpdateProductController extends Controller
 {
-    public function __construct(private ProductService $service) {}
-
     public function __invoke(UpdateProductRequest $request, Product $product)
     {
-        $response = $this->service->update($product, $request->validated());
+        $product->update($request->validated());
 
-        return response()->json($response);
+        return response()->json($product);
     }
 }

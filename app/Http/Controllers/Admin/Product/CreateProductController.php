@@ -9,12 +9,18 @@ use App\Models\Product;
 
 class CreateProductController extends Controller
 {
-    public function __construct(private ProductService $service) {}
-
     public function __invoke(CreateProductRequest $request)
-    {        
-        $response = $this->service->create($request->user()->id, $request->validated());
+    {   
+        $data = $request->validated();
 
-        return response()->json($response, 201);
+        $product = Product::create([
+            'user_id' => $request->user()->id,
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'price' => $data['price'],
+            'image' => $data['image']
+        ]);     
+
+        return response()->json($product, 201);
     }
 }
