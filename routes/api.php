@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\Product\CreateProductController;
 use App\Http\Controllers\Admin\Product\DeleteProductController;
 use App\Http\Controllers\Admin\Product\ListProductsController;
